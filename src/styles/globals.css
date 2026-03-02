@@ -1,0 +1,73 @@
+/* --- Range slider --- */
+.custom-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 18px;          /* thumb ile aynı → dikey alan yeterli */
+  background: transparent;
+  cursor: pointer;
+  outline: none;
+}
+
+/* Track – WebKit */
+.custom-range::-webkit-slider-runnable-track {
+  height: 5px;
+  border-radius: 3px;
+  background: linear-gradient(
+    to right,
+    #d69e2e 0%, #d69e2e var(--pct),
+    #2d3748 var(--pct), #2d3748 100%
+  );
+}
+
+/* Track – Firefox */
+.custom-range::-moz-range-track {
+  height: 5px;
+  border-radius: 3px;
+  background: linear-gradient(
+    to right,
+    #d69e2e 0%, #d69e2e var(--pct),
+    #2d3748 var(--pct), #2d3748 100%
+  );
+}
+
+/* Thumb – WebKit */
+.custom-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #d69e2e;
+  cursor: grab;
+  border: 2px solid #0d1117;
+  margin-top: -6.5px;    /* (trackHeight - thumbHeight) / 2 = (5-18)/2 */
+}
+
+/* Thumb – Firefox */
+.custom-range::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #d69e2e;
+  cursor: grab;
+  border: 2px solid #0d1117;
+}
+
+.custom-range:active::-webkit-slider-thumb { cursor: grabbing; }
+.custom-range:active::-moz-range-thumb { cursor: grabbing; }
+
+/* --- Ödeme planı teslim satırı --- */
+.teslim-row {
+  background: rgba(214, 158, 46, 0.12) !important;
+}
+
+/* --- Responsive --- */
+@media (max-width: 768px) {
+  .main-grid {
+    grid-template-columns: 1fr !important;
+  }
+  .compare-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
