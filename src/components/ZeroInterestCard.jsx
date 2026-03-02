@@ -22,8 +22,14 @@ export default function ZeroInterestCard({ results, fmt, fmtDec }) {
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
         <div>
-          <div style={{ fontSize: 10, color: "#4a5568", textTransform: "uppercase" }}>
-            Gerçek Aylık Faiz
+          <div
+            style={{
+              fontSize: 10,
+              color: "#4a5568",
+              textTransform: "uppercase",
+            }}
+          >
+            Gerçek Aylık Maliyet
           </div>
           <div
             style={{
@@ -56,10 +62,16 @@ export default function ZeroInterestCard({ results, fmt, fmtDec }) {
             lineHeight: 1.5,
           }}
         >
-          {fmt(results.reelKrediFiyat)} ₺ reel kredi üzerinden
-          IRR hesabı. Org. ücreti + teslim gecikmesi + enflasyon dahil.
+          {fmt(results.reelKrediFiyat)} ₺ reel kredi üzerinden IRR hesabı. Org.
+          ücreti + teslim gecikmesi + enflasyon dahil.
         </div>
-        <hr style={{ border: "none", borderTop: "1px solid #21262d", margin: "4px 0" }} />
+        <hr
+          style={{
+            border: "none",
+            borderTop: "1px solid #21262d",
+            margin: "4px 0",
+          }}
+        />
         <div
           style={{
             display: "grid",
@@ -70,31 +82,61 @@ export default function ZeroInterestCard({ results, fmt, fmtDec }) {
         >
           <div>
             <div style={{ color: "#4a5568" }}>Peşinat</div>
-            <div style={{ color: "#a0aec0", fontFamily: "monospace", fontWeight: 600 }}>
+            <div
+              style={{
+                color: "#a0aec0",
+                fontFamily: "monospace",
+                fontWeight: 600,
+              }}
+            >
               {fmt(results.pesinat)} ₺
             </div>
           </div>
           <div>
             <div style={{ color: "#4a5568" }}>Org. Ücreti (peşin)</div>
-            <div style={{ color: "#a0aec0", fontFamily: "monospace", fontWeight: 600 }}>
+            <div
+              style={{
+                color: "#a0aec0",
+                fontFamily: "monospace",
+                fontWeight: 600,
+              }}
+            >
               {fmt(results.hizmetTutari)} ₺
             </div>
           </div>
           <div>
             <div style={{ color: "#4a5568" }}>Toplam İlk Ödeme</div>
-            <div style={{ color: "#d69e2e", fontFamily: "monospace", fontWeight: 700 }}>
+            <div
+              style={{
+                color: "#d69e2e",
+                fontFamily: "monospace",
+                fontWeight: 700,
+              }}
+            >
               {fmt(results.ilkOdeme)} ₺
             </div>
           </div>
           <div>
             <div style={{ color: "#4a5568" }}>Aylık Taksit</div>
-            <div style={{ color: "#a0aec0", fontFamily: "monospace", fontWeight: 600 }}>
+            <div
+              style={{
+                color: "#a0aec0",
+                fontFamily: "monospace",
+                fontWeight: 600,
+              }}
+            >
               {fmt(results.aylikTaksit)} ₺
             </div>
           </div>
           <div>
             <div style={{ color: "#4a5568" }}>Toplam Maliyet</div>
-            <div style={{ color: "#fff", fontFamily: "monospace", fontWeight: 700 }}>
+            <div
+              style={{
+                color: "#fff",
+                fontFamily: "monospace",
+                fontWeight: 700,
+              }}
+            >
               {fmt(results.toplamNominalOdeme)} ₺
             </div>
           </div>

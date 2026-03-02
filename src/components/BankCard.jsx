@@ -21,9 +21,26 @@ export default function BankCard({ results, bankaFaizi, fmt, fmtDec }) {
         Banka Kredisi
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+        {/* Aylık Faiz - büyük */}
         <div>
           <div style={{ fontSize: 10, color: "#4a5568", textTransform: "uppercase" }}>
             Aylık Faiz
+          </div>
+          <div
+            style={{
+              fontSize: 26,
+              fontWeight: 700,
+              color: "#fc8181",
+              fontFamily: "monospace",
+            }}
+          >
+            %{fmtDec(bankaFaizi)}
+          </div>
+        </div>
+        {/* Kredi Tutarı - büyük */}
+        <div>
+          <div style={{ fontSize: 10, color: "#4a5568", textTransform: "uppercase" }}>
+            Kredi Tutarı
           </div>
           <div
             style={{
@@ -33,40 +50,27 @@ export default function BankCard({ results, bankaFaizi, fmt, fmtDec }) {
               fontFamily: "monospace",
             }}
           >
-            %{fmtDec(bankaFaizi)}
+            {fmt(results.kalanTutar)} ₺
           </div>
         </div>
+        {/* Toplam Geri Ödeme - büyük */}
         <div>
           <div style={{ fontSize: 10, color: "#4a5568", textTransform: "uppercase" }}>
-            Yıllık Efektif Faiz
+            Toplam Geri Ödeme
           </div>
           <div
             style={{
-              fontSize: 18,
+              fontSize: 26,
               fontWeight: 700,
-              color: "#e2e8f0",
+              color: "#63b3ed",
               fontFamily: "monospace",
             }}
           >
-            %{fmtDec(results.bankaYillikEfektif, 1)}
-          </div>
-        </div>
-        <div>
-          <div style={{ fontSize: 10, color: "#4a5568", textTransform: "uppercase" }}>
-            Faiz Tutarı
-          </div>
-          <div
-            style={{
-              fontSize: 18,
-              fontWeight: 700,
-              color: "#fc8181",
-              fontFamily: "monospace",
-            }}
-          >
-            {fmt(results.bankaFaizTutari)} ₺
+            {fmt(results.bankaToplamOdeme)} ₺
           </div>
         </div>
         <hr style={{ border: "none", borderTop: "1px solid #21262d", margin: "4px 0" }} />
+        {/* Detaylar - küçük */}
         <div
           style={{
             display: "grid",
@@ -76,27 +80,27 @@ export default function BankCard({ results, bankaFaizi, fmt, fmtDec }) {
           }}
         >
           <div>
+            <div style={{ color: "#4a5568" }}>Yıllık Efektif Faiz</div>
+            <div style={{ color: "#a0aec0", fontFamily: "monospace", fontWeight: 600 }}>
+              %{fmtDec(results.bankaYillikEfektif, 1)}
+            </div>
+          </div>
+          <div>
             <div style={{ color: "#4a5568" }}>Peşinat</div>
             <div style={{ color: "#a0aec0", fontFamily: "monospace", fontWeight: 600 }}>
               {fmt(results.pesinat)} ₺
             </div>
           </div>
           <div>
-            <div style={{ color: "#4a5568" }}>Kredi Tutarı</div>
-            <div style={{ color: "#a0aec0", fontFamily: "monospace", fontWeight: 600 }}>
-              {fmt(results.kalanTutar)} ₺
+            <div style={{ color: "#4a5568" }}>Faiz Tutarı</div>
+            <div style={{ color: "#fc8181", fontFamily: "monospace", fontWeight: 600 }}>
+              {fmt(results.bankaFaizTutari)} ₺
             </div>
           </div>
           <div>
             <div style={{ color: "#4a5568" }}>Aylık Taksit</div>
             <div style={{ color: "#a0aec0", fontFamily: "monospace", fontWeight: 600 }}>
               {fmt(results.bankaAylikTaksit)} ₺
-            </div>
-          </div>
-          <div>
-            <div style={{ color: "#4a5568" }}>Toplam Ödeme</div>
-            <div style={{ color: "#fff", fontFamily: "monospace", fontWeight: 700 }}>
-              {fmt(results.bankaToplamOdeme)} ₺
             </div>
           </div>
         </div>
