@@ -8,7 +8,7 @@ export default function BankCard({ results, bankaFaizi, fmt, fmtDec }) {
         padding: 18,
       }}
     >
-      <div
+      <h3
         style={{
           fontSize: 11,
           color: "#63b3ed",
@@ -16,10 +16,11 @@ export default function BankCard({ results, bankaFaizi, fmt, fmtDec }) {
           textTransform: "uppercase",
           letterSpacing: "0.06em",
           marginBottom: 14,
+          margin: "0 0 14px 0",
         }}
       >
         Banka Kredisi
-      </div>
+      </h3>
       <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
         {/* Aylık Faiz - büyük */}
         <div>

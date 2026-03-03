@@ -8,16 +8,16 @@ export default function DeliveryEffect({ results, krediTeslimAyi, yillikEnflasyo
         padding: 16,
       }}
     >
-      <div
+      <h3
         style={{
           fontSize: 11,
           color: "#d69e2e",
           fontWeight: 700,
-          marginBottom: 8,
+          margin: "0 0 8px 0",
         }}
       >
         📅 Kredi Teslim Tarihi Etkisi ({krediTeslimAyi}. ay)
-      </div>
+      </h3>
       <div style={{ fontSize: 12, color: "#a0aec0", lineHeight: 1.7 }}>
         Satıcıya {krediTeslimAyi}. ayda ödeme yapılıyor. Bu sürede %
         {yillikEnflasyon} yıllık enflasyonla, {fmt(krediFiyat)} ₺'nin

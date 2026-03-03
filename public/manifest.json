@@ -1,0 +1,22 @@
+{
+  "name": "Reel Finans — Kredi ve Tasarruf Analizi",
+  "short_name": "Reel Finans",
+  "description": "Eminevim, Evim Finance gibi sıfır faizli taksit sistemlerinin gerçek maliyetini hesaplayın.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0d1117",
+  "theme_color": "#0d1117",
+  "lang": "tr",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

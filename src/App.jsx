@@ -11,6 +11,7 @@ import PaymentPlanTable from "./components/PaymentPlanTable";
 import InfoModal from "./components/InfoModal";
 import ShareButtons from "./components/ShareButtons";
 import Toast from "./components/Toast";
+import SEOContent from "./components/SEOContent";
 
 export default function App() {
   const state = useHashState();
@@ -50,9 +51,9 @@ export default function App() {
         padding: "24px 12px",
       }}
     >
-      <div style={{ maxWidth: 920, margin: "0 auto" }}>
+      <main style={{ maxWidth: 920, margin: "0 auto" }}>
         {/* Header */}
-        <div
+        <header
           style={{
             marginBottom: 28,
             display: "flex",
@@ -111,7 +112,7 @@ export default function App() {
           >
             i
           </button>
-        </div>
+        </header>
 
         {showInfo && <InfoModal onClose={() => setShowInfo(false)} />}
 
@@ -120,7 +121,7 @@ export default function App() {
           style={{ display: "grid", gridTemplateColumns: "320px 1fr", gap: 20 }}
         >
           {/* Sol - Parametreler */}
-          <div>
+          <section>
             <div
               style={{
                 background: "#161b22",
@@ -130,7 +131,7 @@ export default function App() {
                 marginBottom: 16,
               }}
             >
-              <div
+              <h2
                 style={{
                   fontSize: 11,
                   color: "#d69e2e",
@@ -138,10 +139,11 @@ export default function App() {
                   textTransform: "uppercase",
                   letterSpacing: "0.08em",
                   marginBottom: 16,
+                  margin: "0 0 16px 0",
                 }}
               >
                 Kredi Bilgileri
-              </div>
+              </h2>
               <Slider
                 label="Toplam Tutar"
                 value={krediFiyat}
@@ -195,7 +197,7 @@ export default function App() {
                 padding: 20,
               }}
             >
-              <div
+              <h2
                 style={{
                   fontSize: 11,
                   color: "#718096",
@@ -203,10 +205,11 @@ export default function App() {
                   textTransform: "uppercase",
                   letterSpacing: "0.08em",
                   marginBottom: 16,
+                  margin: "0 0 16px 0",
                 }}
               >
                 Karşılaştırma Parametreleri
-              </div>
+              </h2>
               <Slider
                 label="Banka Aylık Faiz"
                 value={bankaFaizi}
@@ -226,10 +229,13 @@ export default function App() {
                 max={100}
               />
             </div>
-          </div>
+          </section>
 
           {/* Sağ - Sonuçlar */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+          <section style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+            <h2 className="sr-only" style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", clip: "rect(0,0,0,0)", whiteSpace: "nowrap" }}>
+              Karşılaştırma Sonuçları
+            </h2>
             <div
               ref={compareRef}
               className="compare-grid"
@@ -280,9 +286,28 @@ export default function App() {
             {showPlan && (
               <PaymentPlanTable odemePlani={results.odemePlani} fmt={fmt} />
             )}
-          </div>
+          </section>
         </div>
-      </div>
+
+        <SEOContent />
+
+        <footer
+          style={{
+            marginTop: 40,
+            borderTop: "1px solid #21262d",
+            paddingTop: 20,
+            paddingBottom: 20,
+            textAlign: "center",
+          }}
+        >
+          <p style={{ fontSize: 12, color: "#718096", margin: "0 0 8px 0", lineHeight: 1.6 }}>
+            Reel Finans — Eminevim, Fuzul Ev, Birevim, Katılımevim, Sinpaş, İmece, Emlak Katılım, Adil ve Albayrak gibi konut tasarruf sistemlerinin gerçek maliyetini hesaplayan ücretsiz araç.
+          </p>
+          <p style={{ fontSize: 11, color: "#4a5568", margin: 0, lineHeight: 1.6 }}>
+            Bu araç bilgilendirme amaçlıdır, yatırım tavsiyesi değildir. Hesaplamalar tahmini niteliktedir.
+          </p>
+        </footer>
+      </main>
 
       {toast && <Toast message={toast} onDone={() => setToast(null)} />}
     </div>
