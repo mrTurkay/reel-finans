@@ -1,13 +1,16 @@
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 import { fmt, fmtDec } from "./utils/format";
 import useHashState from "./hooks/useHashState";
 import useKrediHesaplama from "./hooks/useKrediHesaplama";
+import useShare from "./hooks/useShare";
 import Slider from "./components/Slider";
 import ZeroInterestCard from "./components/ZeroInterestCard";
 import BankCard from "./components/BankCard";
 import DeliveryEffect from "./components/DeliveryEffect";
 import PaymentPlanTable from "./components/PaymentPlanTable";
 import InfoModal from "./components/InfoModal";
+import ShareButtons from "./components/ShareButtons";
+import Toast from "./components/Toast";
 
 export default function App() {
   const state = useHashState();
@@ -31,6 +34,10 @@ export default function App() {
   const results = useKrediHesaplama(state);
   const [showPlan, setShowPlan] = useState(false);
   const [showInfo, setShowInfo] = useState(false);
+  const [toast, setToast] = useState(null);
+  const compareRef = useRef(null);
+  const showToast = useCallback((msg) => setToast(msg), []);
+  const { shareLink, shareImage } = useShare(showToast);
 
 
   return (
@@ -224,6 +231,7 @@ export default function App() {
           {/* Sağ - Sonuçlar */}
           <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
             <div
+              ref={compareRef}
               className="compare-grid"
               style={{
                 display: "grid",
@@ -239,6 +247,11 @@ export default function App() {
                 fmtDec={fmtDec}
               />
             </div>
+
+            <ShareButtons
+              onShareLink={shareLink}
+              onShareImage={() => shareImage(compareRef)}
+            />
 
             <DeliveryEffect
               results={results}
@@ -270,6 +283,8 @@ export default function App() {
           </div>
         </div>
       </div>
+
+      {toast && <Toast message={toast} onDone={() => setToast(null)} />}
     </div>
   );
 }
