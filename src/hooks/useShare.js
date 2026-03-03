@@ -1,13 +1,17 @@
 import { useCallback } from "react";
-import html2canvas from "html2canvas";
+import { fmt, fmtDec } from "../utils/format";
 
-export default function useShare(setToast) {
+export default function useShare(setToast, results, krediFiyat, taksitSayisi) {
   const shareLink = useCallback(async () => {
     const url = window.location.href;
+    const rate = results?.irrGecersiz
+      ? ""
+      : ` | Gerçek aylık faiz: %${fmtDec(results.gercekAylikFaiz)}`;
+    const text = `${fmt(krediFiyat)} ₺ tutarında ${taksitSayisi} ay vadeli konut tasarruf finansmanı${rate}`;
 
     if (navigator.share) {
       try {
-        await navigator.share({ title: "Reel Finans", url });
+        await navigator.share({ title: "Reel Finans", text, url });
         return;
       } catch {
         /* user cancelled or share failed, fall through to clipboard */
@@ -15,16 +19,19 @@ export default function useShare(setToast) {
     }
 
     try {
-      await navigator.clipboard.writeText(url);
+      await navigator.clipboard.writeText(`${text}\n${url}`);
       setToast("Link kopyalandı!");
     } catch {
       setToast("Link kopyalanamadı");
     }
-  }, [setToast]);
+  }, [setToast, results, krediFiyat, taksitSayisi]);
 
   const shareImage = useCallback(
     async (ref) => {
       if (!ref.current) return;
+
+      // Lazy-load html2canvas for better Core Web Vitals
+      const { default: html2canvas } = await import("html2canvas");
 
       let canvas;
       try {

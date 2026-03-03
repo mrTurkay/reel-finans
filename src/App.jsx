@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import { fmt, fmtDec } from "./utils/format";
 import useHashState from "./hooks/useHashState";
 import useKrediHesaplama from "./hooks/useKrediHesaplama";
@@ -11,7 +11,6 @@ import PaymentPlanTable from "./components/PaymentPlanTable";
 import InfoModal from "./components/InfoModal";
 import ShareButtons from "./components/ShareButtons";
 import Toast from "./components/Toast";
-import SEOContent from "./components/SEOContent";
 
 export default function App() {
   const state = useHashState();
@@ -38,8 +37,32 @@ export default function App() {
   const [toast, setToast] = useState(null);
   const compareRef = useRef(null);
   const showToast = useCallback((msg) => setToast(msg), []);
-  const { shareLink, shareImage } = useShare(showToast);
+  const { shareLink, shareImage } = useShare(showToast, results, krediFiyat, taksitSayisi);
+  const [showScrollHint, setShowScrollHint] = useState(true);
 
+  // Hide scroll hint on scroll
+  useEffect(() => {
+    const onScroll = () => {
+      if (window.scrollY > 200) setShowScrollHint(false);
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Dynamic document.title for SEO + browser tab
+  useEffect(() => {
+    const base = `${fmt(krediFiyat)} ₺ ${taksitSayisi} Ay`;
+    const rate = results.irrGecersiz
+      ? ""
+      : ` | Gerçek Faiz %${fmtDec(results.gercekAylikFaiz)}`;
+    document.title = `${base}${rate} — Reel Finans Hesaplayıcı`;
+
+    // Update OG meta dynamically (helps WhatsApp/Telegram JS renderers)
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) ogTitle.content = `${base}${rate} — Reel Finans`;
+    const ogDesc = document.querySelector('meta[property="og:description"]');
+    if (ogDesc) ogDesc.content = `${fmt(krediFiyat)} ₺ tutarında ${taksitSayisi} ay vadeli konut tasarruf finansmanının gerçek maliyeti. Banka kredisi karşılaştırması ve enflasyon analizi.`;
+  }, [krediFiyat, taksitSayisi, results.gercekAylikFaiz, results.irrGecersiz]);
 
   return (
     <div
@@ -289,25 +312,48 @@ export default function App() {
           </section>
         </div>
 
-        <SEOContent />
+      </main>
 
-        <footer
+      {showScrollHint && (
+        <div
+          className="scroll-hint"
+          onClick={() => {
+            document.getElementById("seo-content")?.scrollIntoView({ behavior: "smooth" });
+            setShowScrollHint(false);
+          }}
           style={{
-            marginTop: 40,
-            borderTop: "1px solid #21262d",
-            paddingTop: 20,
-            paddingBottom: 20,
-            textAlign: "center",
+            position: "fixed",
+            bottom: 24,
+            left: "50%",
+            transform: "translateX(-50%)",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 4,
+            cursor: "pointer",
+            animation: "bounce 2s infinite",
+            opacity: 0.7,
+            transition: "opacity 0.3s",
           }}
         >
-          <p style={{ fontSize: 12, color: "#718096", margin: "0 0 8px 0", lineHeight: 1.6 }}>
-            Reel Finans — Eminevim, Fuzul Ev, Birevim, Katılımevim, Sinpaş, İmece, Emlak Katılım, Adil ve Albayrak gibi konut tasarruf sistemlerinin gerçek maliyetini hesaplayan ücretsiz araç.
-          </p>
-          <p style={{ fontSize: 11, color: "#4a5568", margin: 0, lineHeight: 1.6 }}>
-            Bu araç bilgilendirme amaçlıdır, yatırım tavsiyesi değildir. Hesaplamalar tahmini niteliktedir.
-          </p>
-        </footer>
-      </main>
+          <span style={{ fontSize: 11, color: "#718096", letterSpacing: "0.05em" }}>
+            Detaylı Bilgi
+          </span>
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style={{ color: "#d69e2e" }}>
+            <path d="M10 4v10m0 0l-4-4m4 4l4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </div>
+      )}
+
+      <style>{`
+        @keyframes bounce {
+          0%, 100% { transform: translateX(-50%) translateY(0); }
+          50% { transform: translateX(-50%) translateY(-6px); }
+        }
+        @media (max-width: 768px) {
+          .scroll-hint { display: none !important; }
+        }
+      `}</style>
 
       {toast && <Toast message={toast} onDone={() => setToast(null)} />}
     </div>
